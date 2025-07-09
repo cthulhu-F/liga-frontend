@@ -10,7 +10,7 @@ import { useFechas, useEstadisticas, useResumenLiga } from "@/hooks/use-api-data
 export default function HomePage() {
   const { fechas, loading: loadingFechas } = useFechas()
   const { estadisticas, loading: loadingEstadisticas } = useEstadisticas()
-  const { resumen, loading: loadingResumen } = useResumenLiga()
+  const { resumen: data, loading: loadingResumen } = useResumenLiga()
   const [filtroJugador, setFiltroJugador] = useState("")
   const [fechasExpandidas, setFechasExpandidas] = useState<Record<string, boolean>>({})
 
@@ -64,6 +64,8 @@ export default function HomePage() {
     )
   }
 
+  const resumen = data?.data;
+  
   return (
     <div className="min-h-screen bg-gradient-modern">
       <MainNavigation />
@@ -201,7 +203,7 @@ export default function HomePage() {
                   <div className="flex items-center justify-between">
                     <CardTitle className="bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent flex items-center gap-2">
                       <Calendar className="h-5 w-5 text-modern-accent" />
-                      Fecha: {new Date(fecha.fecha).toLocaleDateString("es-ES")}
+                      Fecha: {new Date(fecha.fecha+" 00:00:00").toLocaleDateString("es-ES")}
                       {fecha.nombre && ` - ${fecha.nombre}`}
                     </CardTitle>
                     <div className="flex items-center gap-4">
