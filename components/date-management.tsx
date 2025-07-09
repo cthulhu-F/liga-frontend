@@ -92,50 +92,15 @@ export function DateManagement() {
         numValue = value
     }
 
-    newPartidos[partidoIndex].resultados[jugadorIndex][field] = numValue
+    newPartidos[partidoIndex].resultados[jugadorIndex][field] = value
 
     // Recalcular posiciones y puntos si se cambian los goles
     if (field === "goles") {
-      const sortedJugadores = [...newPartidos[partidoIndex].resultados].sort((a, b) => b.goles - a.goles)
-
-      sortedJugadores.forEach((jugador, index) => {
-        const originalIndex = newPartidos[partidoIndex].resultados.findIndex(
-          (j: any) => j.jugadorId === jugador.jugadorId,
-        )
-        newPartidos[partidoIndex].resultados[originalIndex].posicion = index + 1
-
-        // Asignar puntos según posición
-        switch (index + 1) {
-          case 1:
-            newPartidos[partidoIndex].resultados[originalIndex].puntos = 3
-            break
-          case 2:
-            newPartidos[partidoIndex].resultados[originalIndex].puntos = 2
-            break
-          case 3:
-            newPartidos[partidoIndex].resultados[originalIndex].puntos = 1
-            break
-          default:
-            newPartidos[partidoIndex].resultados[originalIndex].puntos = 0
-        }
-      })
     }
 
     // Si se cambia la posición manualmente, ajustar otras posiciones
     if (field === "posicion") {
-      const currentPos = numValue
-      const currentJugadorId = newPartidos[partidoIndex].resultados[jugadorIndex].jugadorId
-      const oldPos = newPartidos[partidoIndex].resultados[jugadorIndex].posicion
 
-      // Buscar si otro jugador ya tiene esta posición
-      const otherJugadorIndex = newPartidos[partidoIndex].resultados.findIndex(
-        (r: any, index: number) => r.posicion === currentPos && r.jugadorId !== currentJugadorId
-      )
-
-      if (otherJugadorIndex !== -1) {
-        // Intercambiar posiciones
-        newPartidos[partidoIndex].resultados[otherJugadorIndex].posicion = oldPos
-      }
     }
 
     // Si se cambian los puntos manualmente, no recalcular automáticamente
@@ -353,7 +318,7 @@ export function DateManagement() {
               jugador: jugador,
               goles: 0,
               puntos: 0,
-              posicion: index + 1,
+              posicion: 0,
             }))
           }
 
