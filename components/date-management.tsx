@@ -416,17 +416,17 @@ export function DateManagement() {
                   </div>
 
                   {fecha.partidos && fecha.partidos.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 modern-card">
+                    <div className="grid gap-2 modern-card">
                       {fecha.partidos.map((partido) => (
                         <div key={partido.id} className="modern-card p-3 rounded border">
-                          <h4 className="font-semibold text-center mb-2 text-modern-accent">Partido {partido.numero}</h4>
-                          <div className="text-xs text-white">
+                          <h4 className="font-semibold text-start mb-2 text-modern-accent">Partido {partido.numero}</h4>
+                          <div className="text-md text-white">
                             <table className="w-full">
                               <thead>
                                 <tr>
-                                  <th>Jugador</th>
-                                  <th>Goles</th>
-                                  <th>Puntos</th>
+                                  <th className="text-start">Jugador</th>
+                                  <th className="text-start">Goles</th>
+                                  <th className="text-start">Puntos</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -434,11 +434,11 @@ export function DateManagement() {
                               ?.sort((a, b) => a.posicion - b.posicion)
                               .map((resultado) => (
                                 <tr key={resultado.jugadorId}>
-                                  <td className="text-center">
+                                  <td className="text-start">
                                     {getPosicionIcon(resultado.posicion)} {resultado.jugador?.nombre}
                                   </td>
-                                  <td className="text-center">{resultado.goles}</td>
-                                  <td className="text-center">{resultado.puntos}</td>
+                                  <td className="text-start">{resultado.goles}</td>
+                                  <td className="text-start">{resultado.puntos}</td>
                                 </tr>
                               ))}
                               </tbody>

@@ -226,13 +226,13 @@ export default function HomePage() {
                       <h4 className="font-semibold bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent">
                         Detalle de los {fecha.partidos.length} Partidos:
                       </h4>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                      <div className="grid gap-4">
                         {fecha.partidos.map((partido) => (
                           <div
                             key={partido.id}
                             className="bg-gradient-to-br from-modern-secondary to-modern-tertiary rounded-lg p-4 border border-modern-border/30 hover:shadow-modern transition-all duration-300"
                           >
-                            <h5 className="font-semibold text-center mb-3 bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent">
+                            <h5 className="font-semibold text-start mb-3 bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent">
                               Partido {partido.numero}
                             </h5>
                             <div className="space-y-2">
