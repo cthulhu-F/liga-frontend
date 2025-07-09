@@ -69,8 +69,28 @@ export default function HomePage() {
       <MainNavigation />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Banner ganador */}
+        <Card className="relative w-full h-[250px] mb-8 overflow-hidden">
+          {/* Imagen de fondo difuminada */}
+          <img
+            src="https://liga.franco.in.net/upload/ganador.jpeg"
+            alt="Fondo difuminado"
+            className="absolute inset-0 w-full h-full object-cover blur-md scale-110"
+          />
+
+          {/* Imagen principal centrada */}
+          <div className="relative z-10 flex items-center justify-center h-full">
+            <img
+              src="https://liga.franco.in.net/upload/ganador.jpeg"
+              alt="Ganador"
+              className="h-full object-contain"
+            />
+          </div>
+        </Card>
+
         {/* Estadísticas rápidas */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+
           <Card className="modern-card hover:shadow-modern-lg transition-all duration-300 group">
             <CardContent className="p-4 text-center">
               <Calendar className="h-8 w-8 text-modern-accent mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
@@ -138,11 +158,10 @@ export default function HomePage() {
               <Button
                 variant={filtroJugador === "" ? "default" : "outline"}
                 onClick={() => setFiltroJugador("")}
-                className={`transition-all duration-300 ${
-                  filtroJugador === ""
-                    ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
-                    : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
-                }`}
+                className={`transition-all duration-300 ${filtroJugador === ""
+                  ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                  : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
+                  }`}
               >
                 Todos
               </Button>
@@ -151,11 +170,10 @@ export default function HomePage() {
                   key={jugador}
                   variant={filtroJugador === jugador ? "default" : "outline"}
                   onClick={() => setFiltroJugador(jugador)}
-                  className={`transition-all duration-300 ${
-                    filtroJugador === jugador
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
-                      : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
-                  }`}
+                  className={`transition-all duration-300 ${filtroJugador === jugador
+                    ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                    : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
+                    }`}
                 >
                   {jugador}
                 </Button>
@@ -221,11 +239,10 @@ export default function HomePage() {
                                 .map((resultado) => (
                                   <div
                                     key={`${partido.id}-${resultado.jugadorId}`}
-                                    className={`flex justify-between items-center p-2 rounded transition-all duration-300 hover:bg-modern-accent/5 ${
-                                      filtroJugador === "" || filtroJugador === resultado.jugador?.nombre
-                                        ? ""
-                                        : "opacity-50"
-                                    }`}
+                                    className={`flex justify-between items-center p-2 rounded transition-all duration-300 hover:bg-modern-accent/5 ${filtroJugador === "" || filtroJugador === resultado.jugador?.nombre
+                                      ? ""
+                                      : "opacity-50"
+                                      }`}
                                   >
                                     <div className={`font-medium ${getPosicionColor(resultado.posicion)}`}>
                                       {getPosicionIcon(resultado.posicion)} {resultado.jugador?.nombre}
@@ -296,9 +313,8 @@ export default function HomePage() {
                   {estadisticas.map((jugador, index) => (
                     <tr
                       key={jugador.jugadorId}
-                      className={`hover:bg-modern-accent/5 transition-all duration-300 ${
-                        index === 0 ? "bg-gradient-to-r from-yellow-500/10 to-yellow-600/10" : ""
-                      } ${filtroJugador === "" || filtroJugador === jugador.jugador.nombre ? "" : "opacity-50"}`}
+                      className={`hover:bg-modern-accent/5 transition-all duration-300 ${index === 0 ? "bg-gradient-to-r from-yellow-500/10 to-yellow-600/10" : ""
+                        } ${filtroJugador === "" || filtroJugador === jugador.jugador.nombre ? "" : "opacity-50"}`}
                     >
                       <td className="border border-modern-border/30 p-3 text-center font-bold text-white">
                         {index === 0 && <Trophy className="h-4 w-4 text-yellow-400 inline mr-1" />}

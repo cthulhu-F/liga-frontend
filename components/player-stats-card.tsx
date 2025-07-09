@@ -57,7 +57,7 @@ export function PlayerStatsCard({ player }: PlayerStatsCardProps) {
           <img
             src={player.imagen || "/placeholder.svg"}
             alt={player.nombre}
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
+            className="w-[400px] h-[400px] rounded-sm object-top border-1 border-white shadow-lg"
           />
           <div className="bg-white text-black absolute -bottom-2 -right-2   text-xs px-2 py-1 rounded-full font-bold">
             {player.edad}
