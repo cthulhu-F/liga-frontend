@@ -12,7 +12,7 @@ import { useFechas, useJugadores } from "@/hooks/use-api-data"
 import { apiService, type Fecha } from "@/lib/api"
 
 export function DateManagement() {
-  const { fechas, loading, createFecha, updateFecha, deleteFecha } = useFechas()
+  const { fechas, loading, createFecha, updateFecha } = useFechas()
   const { jugadores } = useJugadores()
   const [isAddingDate, setIsAddingDate] = useState(false)
   const [isEditingDate, setIsEditingDate] = useState(false)
@@ -21,13 +21,16 @@ export function DateManagement() {
   const [currentPartidos, setCurrentPartidos] = useState<any[]>([])
   const [editingDateId, setEditingDateId] = useState<number | null>(null)
   const [isSaving, setIsSaving] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [dateToDelete, setDateToDelete] = useState<Fecha | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const initializeNewDate = () => {
     const today = new Date().toISOString().split("T")[0]
     setCurrentDate(today)
     setCurrentNombre("")
     setCurrentPartidos(
-      Array.from({ length: 5 }, (_, i) => ({
+      Array.from({ length: 1 }, (_, i) => ({
         id: Date.now() + i,
         numero: i + 1,
         resultados: jugadores.map((jugador, index) => ({
@@ -247,6 +250,33 @@ export function DateManagement() {
     setEditingDateId(null)
   }
 
+  const handleDeleteDate = (fecha: Fecha) => {
+    setDateToDelete(fecha)
+    setIsDeleteDialogOpen(true)
+  }
+
+  const confirmDeleteDate = async () => {
+    if (!dateToDelete) return
+
+    setIsDeleting(true)
+    try {
+      const success = await apiService.deleteFecha(dateToDelete.id)
+      if (success) {
+        setIsDeleteDialogOpen(false)
+        setDateToDelete(null)
+      }
+    } catch (error) {
+      console.error("Error deleting fecha:", error)
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  const cancelDeleteDate = () => {
+    setIsDeleteDialogOpen(false)
+    setDateToDelete(null)
+  }
+
   const createSinglePartido = async (fechaId: number, numeroPartido: number) => {
     try {
       const partidoData = {
@@ -408,11 +438,18 @@ export function DateManagement() {
                       </h3>
                       <p className="text-sm text-gray-600">{fecha.partidos?.length || 0} partidos</p>
                     </div>
-                    <Button onClick={() => handleEditDate(fecha)} variant="outline" size="sm"
-                      className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
-                      <Edit className="h-4 w-4 mr-2" />
-                      Editar
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button onClick={() => handleEditDate(fecha)} variant="outline" size="sm"
+                        className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
+                        <Edit className="h-4 w-4 mr-2" />
+                        Editar
+                      </Button>
+                      <Button onClick={() => handleDeleteDate(fecha)} variant="outline" size="sm"
+                        className="bg-red-600 hover:bg-red-700 text-white">
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Eliminar
+                      </Button>
+                    </div>
                   </div>
 
                   {fecha.partidos && fecha.partidos.length > 0 && (
@@ -606,6 +643,49 @@ export function DateManagement() {
                 {isSaving ? "Guardando..." : isAddingDate ? "Crear Fecha" : "Guardar Cambios"}
               </Button>
               <Button onClick={handleCancelEdit} variant="outline" className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
+                <X className="h-4 w-4 mr-2" />
+                Cancelar
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog de confirmación para eliminar fecha */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent className="bg-black text-white">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <Trash2 className="h-5 w-5 text-red-500" />
+              Confirmar Eliminación
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-white">
+              ¿Estás seguro de que quieres eliminar la fecha del{" "}
+              <span className="font-bold">
+                {dateToDelete && new Date(dateToDelete.fecha).toLocaleDateString("es-ES")}
+                {dateToDelete?.nombre && ` - ${dateToDelete.nombre}`}
+              </span>?
+            </p>
+            <p className="text-sm text-gray-400">
+              Esta acción eliminará permanentemente la fecha y todos sus partidos asociados.
+            </p>
+            <div className="flex gap-3 pt-4">
+              <Button 
+                onClick={confirmDeleteDate} 
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                disabled={isDeleting}
+              >
+                {isDeleting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Trash2 className="h-4 w-4 mr-2" />}
+                {isDeleting ? "Eliminando..." : "Eliminar"}
+              </Button>
+              <Button 
+                onClick={cancelDeleteDate} 
+                variant="outline" 
+                className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                disabled={isDeleting}
+              >
                 <X className="h-4 w-4 mr-2" />
                 Cancelar
               </Button>
