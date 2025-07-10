@@ -12,7 +12,7 @@ import { useFechas, useJugadores } from "@/hooks/use-api-data"
 import { apiService, type Fecha } from "@/lib/api"
 
 export function DateManagement() {
-  const { fechas, loading, createFecha, updateFecha } = useFechas()
+  const { fechas, loading, refetch } = useFechas()
   const { jugadores } = useJugadores()
   const [isAddingDate, setIsAddingDate] = useState(false)
   const [isEditingDate, setIsEditingDate] = useState(false)
@@ -131,10 +131,11 @@ export function DateManagement() {
           // Crear partidos para la nueva fecha
           await createPartidosForFecha(fechaId)
           handleCancelEdit()
+          refetch()
         }
       } else if (isEditingDate && editingDateId) {
         // Actualizar fecha existente
-        const success = await updateFecha(editingDateId, {
+        const success = await apiService.updateFecha(editingDateId, {
           fecha: currentDate,
           nombre: currentNombre,
         })
@@ -143,6 +144,7 @@ export function DateManagement() {
           // Actualizar partidos y resultados existentes
           await updatePartidosAndResultados(editingDateId)
           handleCancelEdit()
+          refetch()
         }
       }
     } catch (error) {
@@ -248,6 +250,7 @@ export function DateManagement() {
     setCurrentNombre("")
     setCurrentPartidos([])
     setEditingDateId(null)
+    refetch()
   }
 
   const handleDeleteDate = (fecha: Fecha) => {
@@ -264,6 +267,7 @@ export function DateManagement() {
       if (success) {
         setIsDeleteDialogOpen(false)
         setDateToDelete(null)
+        refetch()
       }
     } catch (error) {
       console.error("Error deleting fecha:", error)
