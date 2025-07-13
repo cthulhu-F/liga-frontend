@@ -54,26 +54,26 @@ export default function HomePage() {
     switch (jugadorId) {
       case 1: return (
         <img
-          src="https://liga.franco.in.net/upload/escudo-axel.png?2"
+          src="https://liga.franco.in.net/upload/escudo-axel.png?3"
           alt="Fondo difuminado"
           className="w-[100%]"
         />
       )
         break;
       case 2: return <img
-        src="https://liga.franco.in.net/upload/escudo-fede.png?2"
+        src="https://liga.franco.in.net/upload/escudo-fede.png?3"
         alt="Fondo difuminado"
           className="w-[100%]"
       />
         break;
       case 3: return <img
-        src="https://liga.franco.in.net/upload/escudo-joaquin.png?2"
+        src="https://liga.franco.in.net/upload/escudo-joaquin.png?3"
         alt="Fondo difuminado"
           className="w-[100%]"
       />
         break;
       case 4: return <img
-        src="https://liga.franco.in.net/upload/escudo-marcos.png?2"
+        src="https://liga.franco.in.net/upload/escudo-marcos.png?3"
         alt="Fondo difuminado"
           className="w-[100%]"
       />
