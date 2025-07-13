@@ -74,15 +74,19 @@ export function useJugadores() {
 
 // Hook para fechas
 export function useFechas() {
+  const [params, setParams] = useState<any>({
+    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+  })
   const [fechas, setFechas] = useState<Fecha[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchFechas = async () => {
+  const fetchFechas = async (filter:any) => {
     try {
       setLoading(true)
       setError(null)
       const response = await apiClient.getFechas({
+        ...filter,
         activa: true,
         includePartidos: true,
         limit: 100,
@@ -108,29 +112,35 @@ export function useFechas() {
   }
 
   useEffect(() => {
-    fetchFechas()
+    fetchFechas(params)
   }, [])
 
   return {
     fechas,
     loading,
     error,
-    refetch: fetchFechas,
+    refetch: (fil : any) => fetchFechas(fil),
     createFecha,
+    setParams,
+    params
   }
 }
 
 // Hook para estadísticas
 export function useEstadisticas() {
+  const [params, setParams] = useState<any>({
+    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+  })
   const [estadisticas, setEstadisticas] = useState<EstadisticasGenerales[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchEstadisticas = async () => {
+  const fetchEstadisticas = async (filter : any) => {
     try {
       setLoading(true)
       setError(null)
-      const response = await apiClient.getEstadisticasGenerales()
+      const query = new URLSearchParams({...params, ...filter}).toString();
+      const response = await apiClient.getEstadisticasGenerales(query)
       setEstadisticas(response.data)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error cargando estadísticas")
@@ -141,14 +151,16 @@ export function useEstadisticas() {
   }
 
   useEffect(() => {
-    fetchEstadisticas()
+    fetchEstadisticas(params)
   }, [])
 
   return {
     estadisticas,
     loading,
     error,
-    refetch: fetchEstadisticas,
+    refetch: (fil) => fetchEstadisticas(fil),
+    setParams,
+    params
   }
 }
 
@@ -157,12 +169,16 @@ export function useResumenLiga() {
   const [resumen, setResumen] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [params, setParams] = useState<any>({
+    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+  })
 
-  const fetchResumen = async () => {
+  const fetchResumen = async (filter:any) => {
     try {
       setLoading(true)
       setError(null)
-      const response = await apiClient.getResumenLiga()
+      const query = new URLSearchParams({...params, ...filter}).toString();
+      const response = await apiClient.getResumenLiga(query)
       setResumen(response)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error cargando resumen")
@@ -173,13 +189,15 @@ export function useResumenLiga() {
   }
 
   useEffect(() => {
-    fetchResumen()
+    fetchResumen(params)
   }, [])
 
   return {
     resumen,
     loading,
     error,
-    refetch: fetchResumen,
+    refetch: (fil : any) => fetchResumen(fil),
+    setParams,
+    params
   }
 }

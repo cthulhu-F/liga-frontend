@@ -135,9 +135,13 @@ class ApiClient {
     page?: number
     limit?: number
     includePartidos?: boolean
+    fechaFin?: any
+    fechaInicio?: any
   }) {
     const searchParams = new URLSearchParams()
     if (params?.activa !== undefined) searchParams.set("activa", params.activa.toString())
+    if (params?.fechaFin) searchParams.set("fechaFin", params.fechaFin.toString())
+    if (params?.fechaInicio) searchParams.set("fechaInicio", params.fechaInicio.toString())
     if (params?.page) searchParams.set("page", params.page.toString())
     if (params?.limit) searchParams.set("limit", params.limit.toString())
     if (params?.includePartidos) searchParams.set("includePartidos", params.includePartidos.toString())
@@ -166,12 +170,12 @@ class ApiClient {
   }
 
   // Métodos de estadísticas
-  async getEstadisticasGenerales() {
-    return this.request<any>("/estadisticas/generales")
+  async getEstadisticasGenerales(filter : any) {
+    return this.request<any>(`/estadisticas/generales?${filter}`)
   }
 
-  async getResumenLiga() {
-    return this.request<any>("/estadisticas/resumen")
+  async getResumenLiga(filter : any) {
+    return this.request<any>(`/estadisticas/resumen?${filter}`)
   }
 }
 
