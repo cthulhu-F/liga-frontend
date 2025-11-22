@@ -12,7 +12,7 @@ export default function HomePage() {
   const { estadisticas, loading: loadingEstadisticas, refetch, setParams, params } = useEstadisticas()
   const { resumen: data, loading: loadingResumen, refetch: refetchResumen, setParams: setParamsResumen, params: paramsResumen } = useResumenLiga()
   const [filtroJugador, setFiltroJugador] = useState("")
-  const [filtroTemporada, setFiltroTemporada] = useState("2025-01-01,2025-07-13")
+  const [filtroTemporada, setFiltroTemporada] = useState("2025-07-14,2026-01-01")
   const [fechasExpandidas, setFechasExpandidas] = useState<Record<string, boolean>>({})
 
   const loading = loadingFechas || loadingEstadisticas || loadingResumen
@@ -63,19 +63,19 @@ export default function HomePage() {
       case 2: return <img
         src="https://liga.franco.in.net/upload/escudo-fede.png?5"
         alt="Fondo difuminado"
-          className="w-[100%]"
+        className="w-[100%]"
       />
         break;
       case 3: return <img
         src="https://liga.franco.in.net/upload/escudo-joaquin.png?5"
         alt="Fondo difuminado"
-          className="w-[100%]"
+        className="w-[100%]"
       />
         break;
       case 4: return <img
         src="https://liga.franco.in.net/upload/escudo-marcos.png?5"
         alt="Fondo difuminado"
-          className="w-[100%]"
+        className="w-[100%]"
       />
         break;
 
@@ -106,30 +106,11 @@ export default function HomePage() {
       <MainNavigation />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Banner ganador */}
-        <Card className="relative w-full h-[250px] mb-8 overflow-hidden">
-          {/* Imagen de fondo difuminada */}
-          <img
-            src="https://liga.franco.in.net/upload/ganador.jpeg"
-            alt="Fondo difuminado"
-            className="absolute inset-0 w-full h-full object-cover blur-md scale-110"
-          />
-
-          {/* Imagen principal centrada */}
-          <div className="relative z-10 flex items-center justify-center h-full">
-            <img
-              src="https://liga.franco.in.net/upload/ganador.jpeg"
-              alt="Ganador"
-              className="h-full object-contain"
-            />
-          </div>
-        </Card>
-
         {/* Filtros */}
-        <Card className="mb-8 modern-card">
+        <Card className="mb-8 bg-modern-primary">
           <CardHeader>
             <CardTitle className="bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent flex items-center gap-2">
-              <Zap className="h-5 w-5 text-modern-accent" />
+              <Zap className="h-5 w-5 text-white" />
               Filtra la temporada
             </CardTitle>
           </CardHeader>
@@ -164,8 +145,8 @@ export default function HomePage() {
                   })
                 }}
                 className={`transition-all duration-300 ${filtroTemporada === "2025-07-14,2026-01-01"
-                  ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
-                  : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
+                  ? "border border-white justify-start text-white bg-modern-primary hover:text-black hover:bg-white"
+                  : "bg-white text-black hover:border hover:border-white  justify-start hover:text-white hover:bg-modern-primary"
                   }`}
               >
                 Temporada 2025/2026
@@ -197,76 +178,107 @@ export default function HomePage() {
                   })
                 }}
                 className={`transition-all duration-300 ${filtroTemporada === "2025-01-01,2025-07-13"
-                  ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
-                  : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
+                  ? "border border-white justify-start text-white bg-modern-primary hover:text-black hover:bg-white"
+                  : "bg-white text-black hover:border hover:border-white  justify-start hover:text-white hover:bg-modern-primary"
                   }`}
               >
-                Temporada 2025/2024
+                Temporada 2024/2025
               </Button>
             </div>
           </CardContent>
         </Card>
 
+        {/*Ganador */}
+        {
+          filtroTemporada === "2025-07-14,2026-01-01"
+            ? <Card className="mb-3">
+              <div className="relative w-full min-h-[400px] overflow-hidden">
+                {/* Imagen de fondo con blur que ocupa todo el espacio */}
+                <img
+                  className="absolute inset-0 w-full h-full object-cover  opacity-80"
+                  src="https://liga.franco.in.net/upload/fede-ganador.jpg"
+                  alt=""
+                />
+
+                {/* Imagen nítida centrada */}
+                <div className="relative flex items-center justify-center">
+                  <img
+                    className="w-[350px] z-10"
+                    src="https://liga.franco.in.net/upload/fede-ganador.jpg"
+                    alt=""
+                  />
+                </div>
+
+                {/* Texto centrado sobre la imagen */}
+                <div className="absolute inset-0 flex items-center justify-center p-4 z-20">
+                  <h2 className="text-2xl md:text-3xl font-bold text-center text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    GANADOR<br />TEMPORADA<br />2024/2025
+                  </h2>
+                </div>
+              </div>
+            </Card>
+            : ""
+        }
+
         {/* Estadísticas rápidas */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
 
-          <Card className="modern-card hover:shadow-modern-lg transition-all duration-300 group">
+          <Card className="bg-modern-primary hover:shadow-modern-lg transition-all duration-300 group">
             <CardContent className="p-4 text-center">
-              <Calendar className="h-8 w-8 text-modern-accent mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
-              <div className="text-2xl font-bold bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent">
+              <Calendar className="h-8 w-8 text-white mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <div className="text-2xl font-bold bg-gradient-to-r text-white bg-clip-text text-transparent">
                 {resumen?.totalFechas || 0}
               </div>
-              <div className="text-sm text-modern-textSecondary">Fechas Jugadas</div>
+              <div className="text-sm text-white">Fechas Jugadas</div>
             </CardContent>
           </Card>
 
-          <Card className="modern-card hover:shadow-modern-lg transition-all duration-300 group">
+          <Card className="bg-modern-primary hover:shadow-modern-lg transition-all duration-300 group">
             <CardContent className="p-4 text-center">
-              <Target className="h-8 w-8 text-modern-accent2 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
-              <div className="text-2xl font-bold bg-gradient-to-r from-modern-accent2 to-modern-success bg-clip-text text-transparent">
+              <Target className="h-8 w-8 text-white mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <div className="text-2xl text-white bg-clip-text text-transparent">
                 {resumen?.totalPartidos || 0}
               </div>
-              <div className="text-sm text-modern-textSecondary">Partidos Totales</div>
+              <div className="text-sm text-white">Partidos Totales</div>
             </CardContent>
           </Card>
 
-          <Card className="modern-card hover:shadow-modern-lg transition-all duration-300 group">
+          <Card className="bg-modern-primary hover:shadow-modern-lg transition-all duration-300 group">
             <CardContent className="p-4 text-center">
-              <Trophy className="h-8 w-8 text-modern-warning mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
-              <div className="text-2xl font-bold bg-gradient-to-r from-modern-warning to-modern-danger bg-clip-text text-transparent">
+              <Trophy className="h-8 w-8 text-white mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <div className="text-2xl font-bold bg-gradient-to-r text-white bg-clip-text text-transparent">
                 {resumen?.totalGoles || 0}
               </div>
-              <div className="text-sm text-modern-textSecondary">Goles Totales</div>
+              <div className="text-sm text-white">Goles Totales</div>
             </CardContent>
           </Card>
 
-          <Card className="modern-card hover:shadow-modern-lg transition-all duration-300 group">
+          <Card className="bg-modern-primary hover:shadow-modern-lg transition-all duration-300 group">
             <CardContent className="p-4 text-center">
-              <Users className="h-8 w-8 text-modern-success mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
-              <div className="text-2xl font-bold bg-gradient-to-r from-modern-success to-modern-accent2 bg-clip-text text-transparent">
+              <Users className="h-8 w-8 text-white mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+              <div className="text-2xl font-bold bg-gradient-to-r text-white bg-clip-text text-transparent">
                 {resumen?.totalJugadores || 0}
               </div>
-              <div className="text-sm text-modern-textSecondary">Jugadores</div>
+              <div className="text-sm text-white">Jugadores</div>
             </CardContent>
           </Card>
 
-          <Card className="modern-card hover:shadow-modern-lg transition-all duration-300 group">
+          <Card className="bg-modern-primary hover:shadow-modern-lg transition-all duration-300 group">
             <CardContent className="p-4 text-center">
               <div className="relative">
-                <TrendingUp className="h-8 w-8 text-modern-accent mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
-                <Star className="h-3 w-3 text-modern-accent2 absolute top-0 right-1/2 animate-pulse" />
+                <TrendingUp className="h-8 w-8 text-white mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+                <Star className="h-3 w-3 text-white absolute top-0 right-1/2 animate-pulse" />
               </div>
-              <div className="text-2xl font-bold bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent">
+              <div className="text-2xl font-bold bg-gradient-to-r text-white bg-clip-text text-transparent">
                 {estadisticas[0]?.jugador?.nombre || "N/A"}
               </div>
-              <div className="text-sm text-modern-textSecondary">Líder General</div>
+              <div className="text-sm text-white">Líder General</div>
             </CardContent>
           </Card>
         </div>
 
-
         {/* Tabla General Acumulativa */}
-        <Card className="modern-card mb-8">
+        <Card className="bg-modern-primary mb-8">
           <CardHeader>
             <CardTitle className="bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent flex items-center gap-2">
               <Trophy className="h-5 w-5 text-modern-accent" />
@@ -360,7 +372,7 @@ export default function HomePage() {
         </Card>
 
         {/* Filtros */}
-        <Card className="mb-8 modern-card">
+        <Card className="mb-8 bg-modern-primary">
           <CardHeader>
             <CardTitle className="bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent flex items-center gap-2">
               <Zap className="h-5 w-5 text-modern-accent" />
@@ -370,11 +382,11 @@ export default function HomePage() {
           <CardContent>
             <div className="flex flex-wrap gap-2">
               <Button
-                variant={filtroJugador === "" ? "default" : "outline"}
+                variant={filtroJugador === "" ? "default" : "default"}
                 onClick={() => setFiltroJugador("")}
                 className={`transition-all duration-300 ${filtroJugador === ""
-                  ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
-                  : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
+                  ? "border border-white justify-start text-white bg-modern-primary hover:text-black hover:bg-white"
+                  : "bg-white text-black hover:border hover:border-white  justify-start hover:text-white hover:bg-modern-primary"
                   }`}
               >
                 Todos
@@ -382,11 +394,11 @@ export default function HomePage() {
               {todosLosJugadores.map((jugador) => (
                 <Button
                   key={jugador}
-                  variant={filtroJugador === jugador ? "default" : "outline"}
+                  variant={filtroJugador === jugador ? "default" : "default"}
                   onClick={() => setFiltroJugador(jugador)}
                   className={`transition-all duration-300 ${filtroJugador === jugador
-                    ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
-                    : "border-modern-border text-modern-textSecondary hover:bg-modern-accent/10 hover:border-modern-accent"
+                    ? "border border-white justify-start text-white bg-modern-primary hover:text-black hover:bg-white"
+                    : "bg-white text-black hover:border hover:border-white  justify-start hover:text-white hover:bg-modern-primary"
                     }`}
                 >
                   {jugador}
@@ -407,7 +419,7 @@ export default function HomePage() {
               ) || 0
 
             return (
-              <Card key={fecha.id} className="modern-card">
+              <Card key={fecha.id} className="bg-modern-primary">
                 <CardHeader
                   className="cursor-pointer hover:bg-modern-accent/5 transition-all duration-300 rounded-t-lg"
                   onClick={() => toggleFechaExpandida(fecha.id.toString())}
@@ -453,12 +465,12 @@ export default function HomePage() {
                                 .map((resultado) => (
                                   <div
                                     key={`${partido.id}-${resultado.jugadorId}`}
-                                    className={`flex justify-between items-center p-2 rounded transition-all duration-300 hover:bg-modern-accent/5 ${filtroJugador === "" || filtroJugador === resultado.jugador?.nombre
+                                    className={`flex justify-between items-center p-2 rounded transition-all duration-300 hover:bg-modern-accent/5 text-white ${filtroJugador === "" || filtroJugador === resultado.jugador?.nombre
                                       ? ""
-                                      : "opacity-50"
+                                      : "text-white"
                                       }`}
                                   >
-                                    <div className={`font-medium ${getPosicionColor(resultado.posicion)}`}>
+                                    <div className={`font-medium text-white`}>
                                       {getPosicionIcon(resultado.posicion)} {resultado.jugador?.nombre}
                                     </div>
                                     <div className="text-sm text-modern-textSecondary bg-modern-tertiary/50 px-2 py-1 rounded">
@@ -482,7 +494,7 @@ export default function HomePage() {
         <div className="text-center mt-8 text-modern-textSecondary">
           <p className="flex items-center justify-center gap-2">
             <Zap className="h-4 w-4 text-modern-accent" />
-            Liga Neoegoísta - Sistema de gestión moderna
+            Liga Neoegoísta - Polideportivo@
             <Zap className="h-4 w-4 text-modern-accent" />
           </p>
         </div>

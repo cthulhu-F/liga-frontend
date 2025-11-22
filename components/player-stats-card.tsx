@@ -42,25 +42,24 @@ export function PlayerStatsCard({ player }: PlayerStatsCardProps) {
   }
 
   const getStatColor = (value: number) => {
-    if (value >= 80) return "text-green-600 bg-green-100"
-    if (value >= 60) return "text-yellow-600 bg-yellow-100"
-    if (value >= 40) return "text-orange-600 bg-orange-100"
-    return "text-red-600 bg-red-100"
+    if (value >= 80) return " text-green-600 bg-white"
+    if (value >= 60) return " text-yellow-600 bg-white"
+    if (value >= 40) return " text-orange-600 bg-white"
+    return "text-red-600 bg-white"
   }
 
   const statEntries = Object.entries(player.stats)
 
   return (
-    <Card className="modern-card hover:shadow-lg transition-shadow duration-300">
-      <CardHeader className="text-center pb-4">
-        <div className="relative mx-auto mb-4">
-          <img
-            src={player.imagen || "/placeholder.svg"}
-            alt={player.nombre}
-            className="w-[400px] h-[400px] rounded-sm object-top border-1 border-white shadow-lg"
-          />
-          <div className="bg-white text-black absolute -bottom-2 -right-2   text-xs px-2 py-1 rounded-full font-bold">
-            {player.edad}
+    <Card className="bg-modern-primary hover:shadow-lg transition-shadow duration-300 p-0">
+      <CardHeader className="text-center p-0">
+        <div className="relative">
+          <div className="overflow-hidden h-[550px]">
+            <img
+              src={player.imagen || "/placeholder.svg"}
+              alt={player.nombre}
+              className="w-full  rounded-sm object-top border-1 border-white shadow-lg"
+            />
           </div>
         </div>
         <h3 className="text-xl font-bold text-modern-accent">{player.nombre}</h3>
@@ -69,7 +68,7 @@ export function PlayerStatsCard({ player }: PlayerStatsCardProps) {
 
       <CardContent className="space-y-6">
         {/* Gráfico de telaraña */}
-        <div className="modern-card rounded-lg p-4">
+        <div className="bg-modern-primary rounded-lg p-4">
           <RadarChart stats={player.stats} size={240} />
         </div>
 
@@ -81,7 +80,7 @@ export function PlayerStatsCard({ player }: PlayerStatsCardProps) {
                 {getStatIcon(statName)}
                 <span className="text-sm font-medium text-modern-accent capitalize">{statName}</span>
               </div>
-              <div className={`bg-white text-black px-2 py-1 rounded-full text-xs font-bold ${getStatColor(value)}`}>{value}</div>
+              <div className={`bg-white text-black px-2 py-1 rounded-full text-xl font-bold ${getStatColor(value)}`}>{value}</div>
             </div>
           ))}
         </div>
@@ -91,9 +90,7 @@ export function PlayerStatsCard({ player }: PlayerStatsCardProps) {
           <div className="flex justify-between items-center">
             <span className="font-semibold text-modern-accent">Promedio General:</span>
             <div
-              className={`bg-white text-black px-3 py-1 rounded-full text-sm font-bold ${getStatColor(
-                Math.round(Object.values(player.stats).reduce((a, b) => a + b, 0) / 6),
-              )}`}
+              className={`bg-white text-black px-3 py-1 rounded-full text-xl font-bold`}
             >
               {Math.round(Object.values(player.stats).reduce((a, b) => a + b, 0) / 6)}
             </div>

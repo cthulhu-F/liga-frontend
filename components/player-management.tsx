@@ -107,14 +107,14 @@ export function PlayerManagement() {
 
   return (
     <div className="space-y-6">
-      <Card className="modern-card">
+      <Card className="">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-modern-accent flex items-center gap-2">
+            <CardTitle className="text-black flex items-center gap-2">
               <User className="h-5 w-5" />
               Gestión de Jugadores
             </CardTitle>
-            <Button onClick={handleCreatePlayer} className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
+            <Button onClick={handleCreatePlayer} className=" bg-white text-black  justify-start hover:text-white hover:bg-modern-primary">
               <Plus className="h-4 w-4 mr-2" />
               Nuevo Jugador
             </Button>
@@ -123,23 +123,25 @@ export function PlayerManagement() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {jugadores.map((player) => (
-              <Card key={player.id} className="modern-card">
-                <CardContent className="p-4">
+              <Card key={player.id} className="bg-modern-primary">
+                <CardContent className="p-0">
                   <div className="text-center mb-4">
-                    <img
+                    <div className="overflow-hidden h-[550px] mb-2">
+                      <img
                       src={player.imagen || "/placeholder.svg?height=64&width=64"}
                       alt={player.nombre}
-                      className="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-white"
+                      className="w-full mx-auto mb-2"
                     />
+                    </div>
                     <h3 className="font-bold text-white">{player.nombre}</h3>
                     <p className="text-sm text-white">
                       {player.edad} años • {player.equipo}
                     </p>
                   </div>
 
-                  <div className="space-y-2 mb-4">
-                    <div className="text-xs text-white">Estadísticas:</div>
-                    <div className="grid grid-cols-2 gap-1 text-xs text-white">
+                  <div className="space-y-1 mb-1 p-2">
+                    <div className="text-xl text-white">Estadísticas:</div>
+                    <div className="grid grid-cols-2 gap-1 text-xl text-white">
                       <div>Ritmo: {player.ritmo}</div>
                       <div>Pase: {player.pase}</div>
                       <div>Regate: {player.regate}</div>
@@ -151,7 +153,7 @@ export function PlayerManagement() {
 
                   <Button
                     onClick={() => handleEditPlayer(player)}
-                    className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                    className="w-full bg-white text-black rounded-[0px]  justify-start hover:text-white hover:bg-modern-primary"
                     size="sm"
                   >
                     <Edit className="h-4 w-4 mr-2" />
@@ -166,7 +168,7 @@ export function PlayerManagement() {
 
       {/* Dialog para editar/crear jugador */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-blue">
+        <DialogContent className="max-w-2xl max-h-[90vh] border-0 overflow-y-auto bg-modern-primary">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
               <Edit className="h-5 w-5" />
@@ -247,13 +249,13 @@ export function PlayerManagement() {
               <div className="flex gap-3 pt-4">
                 <Button
                   onClick={handleSavePlayer}
-                  className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                  className="w-full bg-white text-black   justify-start hover:text-white hover:bg-modern-primary border-0"
                   disabled={isSaving}
                 >
                   {isSaving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
                   {isSaving ? "Guardando..." : isCreating ? "Crear Jugador" : "Guardar Cambios"}
                 </Button>
-                <Button onClick={handleCancelEdit} variant="outline" className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
+                <Button onClick={handleCancelEdit}  className="w-full bg-white text-black   justify-start hover:text-white hover:bg-modern-primary border-0">
                   <X className="h-4 w-4 mr-2" />
                   Cancelar
                 </Button>

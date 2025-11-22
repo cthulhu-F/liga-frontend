@@ -75,13 +75,13 @@ export function useJugadores() {
 // Hook para fechas
 export function useFechas() {
   const [params, setParams] = useState<any>({
-    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+    fechaInicio: '2025-07-14', fechaFin: '2026-01-01'
   })
   const [fechas, setFechas] = useState<Fecha[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchFechas = async (filter:any) => {
+  const fetchFechas = async (filter: any) => {
     try {
       setLoading(true)
       setError(null)
@@ -103,7 +103,7 @@ export function useFechas() {
   const createFecha = async (data: Omit<Fecha, "id" | "created_at" | "updated_at">) => {
     try {
       await apiClient.createFecha(data)
-      await fetchFechas() // Refrescar lista
+      await fetchFechas(params) // Refrescar lista
       return true
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error creando fecha")
@@ -119,7 +119,7 @@ export function useFechas() {
     fechas,
     loading,
     error,
-    refetch: (fil : any) => fetchFechas(fil),
+    refetch: (fil: any) => fetchFechas(fil),
     createFecha,
     setParams,
     params
@@ -129,17 +129,17 @@ export function useFechas() {
 // Hook para estadísticas
 export function useEstadisticas() {
   const [params, setParams] = useState<any>({
-    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+    fechaInicio: '2025-07-14', fechaFin: '2026-01-01'
   })
   const [estadisticas, setEstadisticas] = useState<EstadisticasGenerales[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchEstadisticas = async (filter : any) => {
+  const fetchEstadisticas = async (filter: any) => {
     try {
       setLoading(true)
       setError(null)
-      const query = new URLSearchParams({...params, ...filter}).toString();
+      const query = new URLSearchParams({ ...params, ...filter }).toString();
       const response = await apiClient.getEstadisticasGenerales(query)
       setEstadisticas(response.data)
     } catch (err) {
@@ -170,14 +170,14 @@ export function useResumenLiga() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [params, setParams] = useState<any>({
-    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+    fechaInicio: '2025-07-14', fechaFin: '2026-01-01'
   })
 
-  const fetchResumen = async (filter:any) => {
+  const fetchResumen = async (filter: any) => {
     try {
       setLoading(true)
       setError(null)
-      const query = new URLSearchParams({...params, ...filter}).toString();
+      const query = new URLSearchParams({ ...params, ...filter }).toString();
       const response = await apiClient.getResumenLiga(query)
       setResumen(response)
     } catch (err) {
@@ -196,7 +196,7 @@ export function useResumenLiga() {
     resumen,
     loading,
     error,
-    refetch: (fil : any) => fetchResumen(fil),
+    refetch: (fil: any) => fetchResumen(fil),
     setParams,
     params
   }

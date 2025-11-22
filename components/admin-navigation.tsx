@@ -19,8 +19,8 @@ export function AdminNavigation() {
             <Button
               variant={isActive("/admin") ? "default" : "ghost"}
               className={isActive("/admin")
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                      : "hover:bg-white/10 hover:backdrop-blur-sm"}
+                ? "bg-gradient text-black hover:shadow-glow bg-white"
+                : "hover:bg-white hover:text-black"}
             >
               <Trophy className="h-4 w-4 mr-2" />
               Dashboard
@@ -30,8 +30,8 @@ export function AdminNavigation() {
             <Button
               variant={isActive("/admin/players") ? "default" : "ghost"}
               className={isActive("/admin/players")
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                      : "hover:bg-white/10 hover:backdrop-blur-sm"}
+                ? "bg-gradient text-black hover:shadow-glow bg-white"
+                : "hover:bg-white hover:text-black"}
             >
               <Users className="h-4 w-4 mr-2" />
               Jugadores
@@ -41,8 +41,8 @@ export function AdminNavigation() {
             <Button
               variant={isActive("/admin/dates") ? "default" : "ghost"}
               className={isActive("/admin/dates")
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                      : "hover:bg-white/10 hover:backdrop-blur-sm"}
+                ? "bg-gradient text-black hover:shadow-glow bg-white"
+                : "hover:bg-white hover:text-black"}
             >
               <Calendar className="h-4 w-4 mr-2" />
               Fechas

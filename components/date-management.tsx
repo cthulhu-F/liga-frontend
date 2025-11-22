@@ -12,7 +12,7 @@ import { useFechas, useJugadores } from "@/hooks/use-api-data"
 import { apiService, type Fecha } from "@/lib/api"
 
 export function DateManagement() {
-  const { fechas, loading, refetch } = useFechas()
+  const { fechas, loading, refetch, setParams: setParamsFechas, params: paramsFechas } = useFechas()
   const { jugadores } = useJugadores()
   const [isAddingDate, setIsAddingDate] = useState(false)
   const [isEditingDate, setIsEditingDate] = useState(false)
@@ -24,6 +24,7 @@ export function DateManagement() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [dateToDelete, setDateToDelete] = useState<Fecha | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [filtroTemporada, setFiltroTemporada] = useState("2025-07-14,2026-01-01")
 
   const initializeNewDate = () => {
     const today = new Date().toISOString().split("T")[0]
@@ -131,7 +132,7 @@ export function DateManagement() {
           // Crear partidos para la nueva fecha
           await createPartidosForFecha(fechaId)
           handleCancelEdit()
-          refetch()
+          refetch(paramsFechas)
         }
       } else if (isEditingDate && editingDateId) {
         // Actualizar fecha existente
@@ -144,7 +145,7 @@ export function DateManagement() {
           // Actualizar partidos y resultados existentes
           await updatePartidosAndResultados(editingDateId)
           handleCancelEdit()
-          refetch()
+          refetch(paramsFechas)
         }
       }
     } catch (error) {
@@ -250,7 +251,7 @@ export function DateManagement() {
     setCurrentNombre("")
     setCurrentPartidos([])
     setEditingDateId(null)
-    refetch()
+    refetch(paramsFechas)
   }
 
   const handleDeleteDate = (fecha: Fecha) => {
@@ -267,7 +268,7 @@ export function DateManagement() {
       if (success) {
         setIsDeleteDialogOpen(false)
         setDateToDelete(null)
-        refetch()
+        refetch(paramsFechas)
       }
     } catch (error) {
       console.error("Error deleting fecha:", error)
@@ -416,23 +417,62 @@ export function DateManagement() {
 
   return (
     <div className="space-y-6">
-      <Card className="modern-card">
+      <Card className="bg-modern-primary">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-modern-accent flex items-center gap-2">
+          <div className="lg:flex items-center justify-between">
+            <CardTitle className="text-modern-accent flex items-center gap-2 w-full lg:mb-0 mb-2">
               <Calendar className="h-5 w-5" />
               Gestión de Fechas
             </CardTitle>
-            <Button onClick={initializeNewDate} className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
-              <Plus className="h-4 w-4 mr-2" />
-              Nueva Fecha
-            </Button>
+            <div className="lg:flex gap-2">
+              <Button
+                onClick={() => {
+                  setParamsFechas({
+                    ...paramsFechas,
+                    fechaInicio: '2025-07-14', fechaFin: '2026-01-01'
+                  })
+                  setFiltroTemporada("2025-07-14,2026-01-01")
+                  refetch({
+                    fechaInicio: '2025-07-14', fechaFin: '2026-01-01'
+                  })
+                }}
+                className={`transition-all duration-300 ${filtroTemporada === "2025-07-14,2026-01-01"
+                  ? "border border-white justify-start text-white bg-modern-primary hover:text-black hover:bg-white w-full block lg:mb-0 mb-2"
+                  : "bg-white text-black hover:border hover:border-white  justify-start hover:text-white hover:bg-modern-primary w-full block lg:mb-0 mb-2"
+                  }`}
+              >
+                Temporada 2025/2026
+              </Button>
+              <Button
+                onClick={() => {
+
+                  setParamsFechas({
+                    ...paramsFechas,
+                    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+                  })
+                  setFiltroTemporada("2025-01-01,2025-07-13")
+                  refetch({
+                    fechaInicio: '2025-01-01', fechaFin: '2025-07-13'
+                  })
+                }}
+                className={`transition-all duration-300 ${filtroTemporada === "2025-01-01,2025-07-13"
+                  ? "border border-white justify-start text-white bg-modern-primary w-full block lg:mb-0 mb-2"
+                  : "bg-white text-black hover:border hover:border-white  justify-start hover:text-white hover:bg-modern-primary w-full block lg:mb-0 mb-2"
+                  }`}
+              >
+                Temporada 2025/2024
+              </Button>
+              <Button onClick={initializeNewDate} className="w-full text-center bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white">
+                <Plus className="h-4 w-4 mr-2" />
+                Nueva Fecha
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {fechas.map((fecha) => (
-              <Card key={fecha.id} className="modern-card">
+              <Card key={fecha.id} className="bg-modern-primary">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -440,26 +480,25 @@ export function DateManagement() {
                         Fecha: {new Date(fecha.fecha).toLocaleDateString("es-ES")}
                         {fecha.nombre && ` - ${fecha.nombre}`}
                       </h3>
-                      <p className="text-sm text-gray-600">{fecha.partidos?.length || 0} partidos</p>
+                      <p className="text-sm text-white">{fecha.partidos?.length || 0} partidos</p>
                     </div>
                     <div className="flex gap-2">
-                      <Button onClick={() => handleEditDate(fecha)} variant="outline" size="sm"
-                        className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
-                        <Edit className="h-4 w-4 mr-2" />
-                        Editar
+                      <Button onClick={() => handleEditDate(fecha)}
+                        size="sm"
+                        className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary">
+                        <Edit className="h-4 w-4" />
                       </Button>
-                      <Button onClick={() => handleDeleteDate(fecha)} variant="outline" size="sm"
-                        className="bg-red-600 hover:bg-red-700 text-white">
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Eliminar
+                      <Button onClick={() => handleDeleteDate(fecha)} size="sm"
+                        className="w-full bg-white text-black  justify-start hover:text-white hover:bg-modern-primary">
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
 
                   {fecha.partidos && fecha.partidos.length > 0 && (
-                    <div className="grid gap-2 modern-card">
+                    <div className="grid gap-2 bg-transparent">
                       {fecha.partidos.map((partido) => (
-                        <div key={partido.id} className="modern-card p-3 rounded border">
+                        <div key={partido.id} className="bg-transparent p-3 rounded border-0">
                           <h4 className="font-semibold text-start mb-2 text-modern-accent">Partido {partido.numero}</h4>
                           <div className="text-md text-white">
                             <table className="w-full">
@@ -471,17 +510,17 @@ export function DateManagement() {
                                 </tr>
                               </thead>
                               <tbody>
-                            {partido.resultados
-                              ?.sort((a, b) => a.posicion - b.posicion)
-                              .map((resultado) => (
-                                <tr key={resultado.jugadorId}>
-                                  <td className="text-start">
-                                    {getPosicionIcon(resultado.posicion)} {resultado.jugador?.nombre}
-                                  </td>
-                                  <td className="text-start">{resultado.goles}</td>
-                                  <td className="text-start">{resultado.puntos}</td>
-                                </tr>
-                              ))}
+                                {partido.resultados
+                                  ?.sort((a, b) => a.posicion - b.posicion)
+                                  .map((resultado) => (
+                                    <tr key={resultado.jugadorId}>
+                                      <td className="text-start">
+                                        {getPosicionIcon(resultado.posicion)} {resultado.jugador?.nombre}
+                                      </td>
+                                      <td className="text-start">{resultado.goles}</td>
+                                      <td className="text-start">{resultado.puntos}</td>
+                                    </tr>
+                                  ))}
                               </tbody>
                             </table>
                           </div>
@@ -498,7 +537,7 @@ export function DateManagement() {
 
       {/* Dialog para agregar/editar fecha */}
       <Dialog open={isAddingDate || isEditingDate} onOpenChange={handleCancelEdit}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-black">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-modern-primary">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
               <Calendar className="h-5 w-5" />
@@ -533,24 +572,23 @@ export function DateManagement() {
             {/* Partidos */}
             {currentPartidos.length > 0 && (
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="font-semibold text-green-800">
+                <div className="flex items-center justify-between mb-4 hidden">
+                  <h4 className="font-semibold text-white">
                     Resultados de los {currentPartidos.length} Partidos
                   </h4>
                   <Button
                     onClick={addNewPartido}
-                    variant="outline"
                     size="sm"
-                    className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                    className=" bg-white text-black  justify-start hover:text-white hover:bg-modern-primary"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Agregar Partido
                   </Button>
                 </div>
                 <Tabs defaultValue="partido-1" className="w-full">
-                  <TabsList className="grid w-full text-white modern-card" style={{ gridTemplateColumns: `repeat(${currentPartidos.length}, 1fr)` }}>
+                  <TabsList className="grid w-full text-white bg-modern-primary hidden" style={{ gridTemplateColumns: `repeat(${currentPartidos.length}, 1fr)` }}>
                     {currentPartidos.map((partido) => (
-                      <TabsTrigger key={partido.id} value={`partido-${partido.numero}`} className="modern-card text-white mx-1">
+                      <TabsTrigger key={partido.id} value={`partido-${partido.numero}`} className="bg-modern-primary text-white mx-1">
                         Partido {partido.numero}
                       </TabsTrigger>
                     ))}
@@ -558,9 +596,9 @@ export function DateManagement() {
 
                   {currentPartidos.map((partido, partidoIndex) => (
                     <TabsContent key={partido.id} value={`partido-${partido.numero}`} className="space-y-4">
-                      <Card className="modern-card">
+                      <Card className="bg-modern-primary">
                         <CardHeader>
-                          <div className="flex items-center justify-between">
+                          <div className="bg-modern-primary flex items-center justify-between">
                             <CardTitle className="text-white flex items-center gap-2">
                               <Trophy className="h-4 w-4" />
                               Partido {partido.numero}
@@ -570,7 +608,7 @@ export function DateManagement() {
                                 onClick={() => deletePartido(partidoIndex)}
                                 variant="outline"
                                 size="sm"
-                                className="bg-red-600 hover:bg-red-700 text-white"
+                                className="bg-modern-primary text-white"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -582,7 +620,7 @@ export function DateManagement() {
                             {partido.resultados?.map((resultado: any, jugadorIndex: number) => (
                               <div
                                 key={resultado.jugadorId}
-                                className="grid grid-cols-5 gap-4 items-center p-3 rounded modern-card"
+                                className="grid grid-cols-5 gap-4 items-center p-3 rounded bg-modern-primary"
                               >
                                 <div className="font-medium text-white">{resultado.jugador?.nombre}</div>
                                 <div className="space-y-1">
@@ -642,11 +680,11 @@ export function DateManagement() {
 
             {/* Botones */}
             <div className="flex gap-3 pt-4">
-              <Button onClick={handleSaveDate} className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white" disabled={isSaving}>
+              <Button onClick={handleSaveDate} className="w-full bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white" disabled={isSaving}>
                 {isSaving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
                 {isSaving ? "Guardando..." : isAddingDate ? "Crear Fecha" : "Guardar Cambios"}
               </Button>
-              <Button onClick={handleCancelEdit} variant="outline" className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white">
+              <Button onClick={handleCancelEdit}  className="w-full bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white">
                 <X className="h-4 w-4 mr-2" />
                 Cancelar
               </Button>
@@ -657,7 +695,7 @@ export function DateManagement() {
 
       {/* Dialog de confirmación para eliminar fecha */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent className="bg-black text-white">
+        <DialogContent className="bg-modern-primary text-white">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
               <Trash2 className="h-5 w-5 text-red-500" />
@@ -676,18 +714,18 @@ export function DateManagement() {
               Esta acción eliminará permanentemente la fecha y todos sus partidos asociados.
             </p>
             <div className="flex gap-3 pt-4">
-              <Button 
-                onClick={confirmDeleteDate} 
-                className="w-full bg-red-600 hover:bg-red-700 text-white"
+              <Button
+                onClick={confirmDeleteDate}
+                className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
                 disabled={isDeleting}
               >
                 {isDeleting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Trash2 className="h-4 w-4 mr-2" />}
                 {isDeleting ? "Eliminando..." : "Eliminar"}
               </Button>
-              <Button 
-                onClick={cancelDeleteDate} 
-                variant="outline" 
-                className="w-full bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+              <Button
+                onClick={cancelDeleteDate}
+                variant="outline"
+                className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
                 disabled={isDeleting}
               >
                 <X className="h-4 w-4 mr-2" />

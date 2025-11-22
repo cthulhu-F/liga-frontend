@@ -33,14 +33,14 @@ export function MainNavigation() {
           {/* Logo - responsive */}
           <Link href="/" className="flex items-center gap-2 md:gap-3 hover:opacity-80 transition-all duration-300 group">
             <div className="relative">
-              <Trophy className="h-8 w-8 md:h-10 md:w-10 text-modern-accent group-hover:animate-pulse-glow transition-all duration-300" />
-              <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-modern-accent2 absolute -top-1 -right-1 animate-pulse" />
+              <Trophy className="h-8 w-8 md:h-10 md:w-10 text-white " />
+              <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-white absolute -top-1 -right-1" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent">
+              <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r  text-white">
                 Liga Neoegoísta
               </h1>
-              <p className="text-modern-textSecondary text-sm md:text-lg">Sistema de gestión moderna</p>
+              <p className="text-white text-sm md:text-lg"></p>
             </div>
             <div className="block sm:hidden">
               <h1 className="text-xl font-bold bg-gradient-to-r from-modern-accent to-modern-accent2 bg-clip-text text-transparent">
@@ -55,36 +55,33 @@ export function MainNavigation() {
               <Link href="/">
                 <Button
                   variant={isActive("/") ? "default" : "ghost"}
-                  className={`text-white transition-all duration-300 ${
-                    isActive("/")
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                      : "hover:bg-white/10 hover:backdrop-blur-sm"
-                  }`}
+                  className={`text-white transition-all duration-300 ${isActive("/")
+                    ? "bg-gradient text-black hover:shadow-glow bg-white"
+                    : "hover:bg-white hover:text-black"
+                    }`}
                 >
-                  📊 Liga
+                  Liga
                 </Button>
               </Link>
               <Link href="/stats">
                 <Button
                   variant={isActive("/stats") ? "default" : "ghost"}
-                  className={`text-white transition-all duration-300 ${
-                    isActive("/stats")
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                      : "hover:bg-white/10 hover:backdrop-blur-sm"
-                  }`}
+                  className={`text-white transition-all duration-300 ${isActive("/stats")
+                    ? "bg-gradient text-black hover:shadow-glow bg-white"
+                    : "hover:bg-white hover:text-black"
+                    }`}
                 >
-                  🎯 Estadísticas
+                  Estadísticas
                 </Button>
               </Link>
               {isAuthenticated ? (
                 <Link href="/admin">
                   <Button
                     variant={isActive("/admin") ? "default" : "ghost"}
-                    className={`text-white transition-all duration-300 ${
-                      isActive("/admin")
-                        ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                        : "hover:bg-white/10 hover:backdrop-blur-sm"
-                    }`}
+                    className={`text-white transition-all duration-300 ${isActive("/admin")
+                      ? "bg-gradient text-black hover:shadow-glow bg-white"
+                      : "hover:bg-white hover:text-black"
+                      }`}
                   >
                     <Settings className="h-4 w-4 mr-2" />
                     Admin
@@ -94,11 +91,10 @@ export function MainNavigation() {
                 <Link href="/login">
                   <Button
                     variant={isActive("/login") ? "default" : "ghost"}
-                    className={`text-white transition-all duration-300 ${
-                      isActive("/login")
-                        ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                        : "hover:bg-white/10 hover:backdrop-blur-sm"
-                    }`}
+                    className={`text-white transition-all duration-300 ${isActive("/login")
+                      ? "bg-gradient text-black hover:shadow-glow bg-white"
+                      : "hover:bg-white hover:text-black"
+                      }`}
                   >
                     🔐 Login
                   </Button>
@@ -117,7 +113,7 @@ export function MainNavigation() {
                   onClick={logout}
                   variant="outline"
                   size="sm"
-                  className="bg-transparent border-modern-border text-white hover:bg-modern-accent/20 hover:border-modern-accent transition-all duration-300"
+                  className="bg-transparent border-white text-white hover:bg-white hover:text-black"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Salir
@@ -144,36 +140,33 @@ export function MainNavigation() {
               <Link href="/" onClick={closeMobileMenu}>
                 <Button
                   variant={isActive("/") ? "default" : "ghost"}
-                  className={`w-full justify-start text-white transition-all duration-300 ${
-                    isActive("/")
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                      : "hover:bg-white/10 hover:backdrop-blur-sm"
-                  }`}
+                  className={`w-full justify-start text-white transition-all duration-300 ${isActive("/")
+                    ? "bg-gradient text-black hover:shadow-glow bg-white"
+                    : "hover:bg-white hover:text-black"
+                    }`}
                 >
-                  📊 Liga
+                  Liga
                 </Button>
               </Link>
               <Link href="/stats" onClick={closeMobileMenu}>
                 <Button
                   variant={isActive("/stats") ? "default" : "ghost"}
-                  className={`w-full justify-start text-white transition-all duration-300 ${
-                    isActive("/stats")
-                      ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                      : "hover:bg-white/10 hover:backdrop-blur-sm"
-                  }`}
+                  className={`w-full justify-start text-white transition-all duration-300 ${isActive("/stats")
+                    ? "bg-gradient text-black hover:shadow-glow bg-white"
+                    : "hover:bg-white hover:text-black"
+                    }`}
                 >
-                  🎯 Estadísticas
+                  Estadísticas
                 </Button>
               </Link>
               {isAuthenticated ? (
                 <Link href="/admin" onClick={closeMobileMenu}>
                   <Button
                     variant={isActive("/admin") ? "default" : "ghost"}
-                    className={`w-full justify-start text-white transition-all duration-300 ${
-                      isActive("/admin")
-                        ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                        : "hover:bg-white/10 hover:backdrop-blur-sm"
-                    }`}
+                    className={`w-full justify-start text-white transition-all duration-300 ${isActive("/admin")
+                      ? "bg-gradient text-black hover:shadow-glow bg-white"
+                      : "hover:bg-white hover:text-black"
+                      }`}
                   >
                     <Settings className="h-4 w-4 mr-2" />
                     Admin
@@ -183,11 +176,10 @@ export function MainNavigation() {
                 <Link href="/login" onClick={closeMobileMenu}>
                   <Button
                     variant={isActive("/login") ? "default" : "ghost"}
-                    className={`w-full justify-start text-white transition-all duration-300 ${
-                      isActive("/login")
-                        ? "bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow"
-                        : "hover:bg-white/10 hover:backdrop-blur-sm"
-                    }`}
+                    className={`w-full justify-start text-white transition-all duration-300 ${isActive("/login")
+                      ? "bg-gradient text-black hover:shadow-glow bg-white"
+                      : "hover:bg-white hover:text-black"
+                      }`}
                   >
                     🔐 Login
                   </Button>
@@ -210,7 +202,7 @@ export function MainNavigation() {
                     }}
                     variant="outline"
                     size="sm"
-                    className="bg-transparent border-modern-border text-white hover:bg-modern-accent/20 hover:border-modern-accent transition-all duration-300"
+                    className="text-white hover:bg-white hover:text-black"
                   >
                     <LogOut className="h-4 w-4 mr-2" />
                     Salir

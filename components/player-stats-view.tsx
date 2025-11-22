@@ -100,18 +100,18 @@ export function PlayerStatsView() {
   return (
     <div className="space-y-8">
       {/* Header de estadísticas */}
-      <Card className="modern-card text-white border-0">
+      <Card className="bg-modern-primary text-white border-0">
         <CardHeader>
           <CardTitle className="flex items-center gap-3 text-2xl text-modern-accent">
             <BarChart3 className="h-8 w-8" />
             Estadísticas Individuales de Jugadores
           </CardTitle>
-          <p className="text-green-100 text-modern-textSecondary">Análisis detallado del rendimiento de cada integrante</p>
+          <p className="text-white text-modern-white">Análisis detallado del rendimiento de cada integrante</p>
         </CardHeader>
       </Card>
 
       {/* Estadísticas comparativas */}
-      <Card className="modern-card">
+      <Card className="bg-modern-primary">
         <CardHeader>
           <CardTitle className="text-modern-accent flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
@@ -121,7 +121,7 @@ export function PlayerStatsView() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(comparaciones).map(([stat, data]: [string, any]) => (
-              <div key={stat} className="modern-card p-4 rounded-lg">
+              <div key={stat} className="bg-modern-primary p-4 rounded-lg">
                 <h4 className="font-semibold text-modern-accent capitalize mb-2">{stat}</h4>
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
@@ -142,7 +142,7 @@ export function PlayerStatsView() {
       </Card>
 
       {/* Controles de filtrado y ordenamiento */}
-      <Card className="modern-card">
+      <Card className="bg-modern-primary">
         <CardHeader>
           <CardTitle className="text-modern-accent flex items-center gap-2">
             <Users className="h-5 w-5" />
@@ -157,7 +157,7 @@ export function PlayerStatsView() {
                 variant={jugadorSeleccionado === "" ? "default" : "outline"}
                 onClick={() => setJugadorSeleccionado("")}
                 size="sm"
-                className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
               >
                 Todos
               </Button>
@@ -167,7 +167,7 @@ export function PlayerStatsView() {
                   variant={jugadorSeleccionado === jugador.nombre ? "default" : "outline"}
                   onClick={() => setJugadorSeleccionado(jugador.nombre)}
                   size="sm"
-                  className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                  className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
                 >
                   {jugador.nombre}
                 </Button>
@@ -180,7 +180,7 @@ export function PlayerStatsView() {
                 variant={ordenarPor === "promedio" ? "default" : "outline"}
                 onClick={() => setOrdenarPor("promedio")}
                 size="sm"
-                className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
               >
                 Promedio Stats
               </Button>
@@ -188,7 +188,7 @@ export function PlayerStatsView() {
                 variant={ordenarPor === "puntos" ? "default" : "outline"}
                 onClick={() => setOrdenarPor("puntos")}
                 size="sm"
-                className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
               >
                 Puntos Liga
               </Button>
@@ -196,7 +196,7 @@ export function PlayerStatsView() {
                 variant={ordenarPor === "edad" ? "default" : "outline"}
                 onClick={() => setOrdenarPor("edad")}
                 size="sm"
-                className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
               >
                 Edad
               </Button>
@@ -204,7 +204,7 @@ export function PlayerStatsView() {
                 variant={ordenarPor === "nombre" ? "default" : "outline"}
                 onClick={() => setOrdenarPor("nombre")}
                 size="sm"
-                className="bg-gradient-to-r from-modern-accent to-modern-accent2 hover:shadow-glow text-white"
+                className="bg-white text-black  justify-start hover:text-white hover:bg-modern-primary hover:border hover:border-white"
               >
                 Nombre
               </Button>
@@ -221,7 +221,7 @@ export function PlayerStatsView() {
       </div>
 
       {/* Resumen de mejores jugadores por categoría */}
-      <Card className="modern-card">
+      <Card className="bg-modern-primary">
         <CardHeader>
           <CardTitle className="text-modern-accent flex items-center gap-2">
             <Award className="h-5 w-5" />
@@ -233,7 +233,7 @@ export function PlayerStatsView() {
             {Object.entries(comparaciones).map(([stat, data]: [string, any]) => (
               <div
                 key={stat}
-                className="text-center p-4 modern-card rounded-lg border "
+                className="text-center p-4 bg-modern-primary rounded-lg border "
               >
                 <div className="text-2xl mb-2">🏆</div>
                 <h4 className="font-bold text-modern-accent capitalize">{stat}</h4>
