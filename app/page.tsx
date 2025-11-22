@@ -190,7 +190,7 @@ export default function HomePage() {
 
         {/*Ganador */}
         {
-          filtroTemporada === "2025-07-14,2026-01-01"
+          filtroTemporada === "2025-01-01,2025-07-13"
             ? <Card className="mb-3">
               <div className="relative w-full min-h-[400px] overflow-hidden">
                 {/* Imagen de fondo con blur que ocupa todo el espacio */}
