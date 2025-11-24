@@ -54,10 +54,10 @@ export function MainNavigation() {
             <nav className="flex items-center gap-2">
               <Link href="/">
                 <Button
-                  variant={isActive("/") ? "default" : "ghost"}
+                  variant={isActive("/") ? "default" : "default"}
                   className={`text-white transition-all duration-300 ${isActive("/")
                     ? "bg-gradient text-black hover:shadow-glow bg-white"
-                    : "hover:bg-white hover:text-black"
+                    : "hover:bg-white hover:text-black bg-transparent"
                     }`}
                 >
                   Liga
@@ -65,22 +65,44 @@ export function MainNavigation() {
               </Link>
               <Link href="/stats">
                 <Button
-                  variant={isActive("/stats") ? "default" : "ghost"}
+                  variant={isActive("/stats") ? "default" : "default"}
                   className={`text-white transition-all duration-300 ${isActive("/stats")
                     ? "bg-gradient text-black hover:shadow-glow bg-white"
-                    : "hover:bg-white hover:text-black"
+                    : "hover:bg-white hover:text-black bg-transparent"
                     }`}
                 >
                   Estadísticas
                 </Button>
               </Link>
+              <Link href="/cup">
+                <Button
+                  variant={isActive("/cup") ? "default" : "default"}
+                  className={`text-white transition-all duration-300 ${isActive("/cup")
+                    ? "bg-gradient text-black hover:shadow-glow bg-white"
+                    : "hover:bg-white hover:text-black bg-transparent"
+                    }`}
+                >
+                  Copa de Campeones
+                </Button>
+              </Link>
+              <Link href="/cup-penalty">
+                <Button
+                  variant={isActive("/cup-penalty") ? "default" : "default"}
+                  className={`text-white transition-all duration-300 ${isActive("/cup-penalty")
+                    ? "bg-gradient text-black hover:shadow-glow bg-white"
+                    : "hover:bg-white hover:text-black bg-transparent"
+                    }`}
+                >
+                  Copa penales
+                </Button>
+              </Link>
               {isAuthenticated ? (
                 <Link href="/admin">
                   <Button
-                    variant={isActive("/admin") ? "default" : "ghost"}
+                    variant={isActive("/admin") ? "default" : "default"}
                     className={`text-white transition-all duration-300 ${isActive("/admin")
                       ? "bg-gradient text-black hover:shadow-glow bg-white"
-                      : "hover:bg-white hover:text-black"
+                    : "hover:bg-white hover:text-black bg-transparent"
                       }`}
                   >
                     <Settings className="h-4 w-4 mr-2" />
@@ -157,6 +179,17 @@ export function MainNavigation() {
                     }`}
                 >
                   Estadísticas
+                </Button>
+              </Link>
+              <Link href="/cup" onClick={closeMobileMenu}>
+                <Button
+                  variant={isActive("/cup") ? "default" : "ghost"}
+                  className={`w-full justify-start text-white transition-all duration-300 ${isActive("/cup")
+                    ? "bg-gradient text-black hover:shadow-glow bg-white"
+                    : "hover:bg-white hover:text-black"
+                    }`}
+                >
+                  Copas
                 </Button>
               </Link>
               {isAuthenticated ? (
